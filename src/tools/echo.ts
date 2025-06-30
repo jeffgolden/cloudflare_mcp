@@ -5,7 +5,7 @@ import { zodToJsonSchema } from 'zod-to-json-schema';
 
 export function getEchoTools(): { tools: Record<string, Tool> } {
   const EchoInputSchema = z.object({
-    message: z.string(),
+    message: z.string().optional().default('pong'),
   });
 
   const echoTool: Tool = {
