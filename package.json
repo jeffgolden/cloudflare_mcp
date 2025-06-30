@@ -1,0 +1,35 @@
+{
+  "name": "cloudflare-dns-mcp",
+  "version": "1.0.0",
+  "description": "Cloudflare DNS Management MCP Server",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "./node_modules/.bin/tsc",
+    "start": "node dist/index.js",
+    "test": "jest",
+    "test:client": "node dist/test-client.js"
+  },
+  "keywords": [
+    "mcp",
+    "cloudflare",
+    "dns"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.0",
+    "axios": "^1.4.0",
+    "dotenv": "^16.3.1",
+    "nock": "^13.4.0",
+    "zod": "^3.21.4",
+    "zod-to-json-schema": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.3",
+    "@types/node": "^20.4.8",
+    "jest": "^29.6.2",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.5.4"
+  }
+}
