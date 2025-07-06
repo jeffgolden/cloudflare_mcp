@@ -138,14 +138,7 @@ export function getZoneManagementTools(client: CloudflareClient): { tools: Recor
         }
         body = { [`${purge_type}`]: targets };
       }
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(await client.post(`/zones/${zoneId}/purge_cache`, body), null, 2)
-          }
-        ]
-      };
+      return client.post(`/zones/${zoneId}/purge_cache`, body);
     },
   };
 

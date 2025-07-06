@@ -1,0 +1,4 @@
+    handler: async () => {
+      const zones = await client.get<Array<z.infer<typeof ZoneSchema>>>('/zones');
+      return zones.map(z => ({ id: z.id, name: z.name, status: z.status }));
+    },

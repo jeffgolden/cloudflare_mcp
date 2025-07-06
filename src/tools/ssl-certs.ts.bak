@@ -45,14 +45,7 @@ function buildTools(client: CloudflareClient): Record<string, Tool> {
     handler: async (params: any) => {
       const { zone_name } = params as z.infer<typeof listSslCertsParamsSchema>;
       const zoneId = await getZoneId(zone_name);
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(await client.get(`/zones/${zoneId}/ssl/certificate_packs`), null, 2)
-          }
-        ]
-      };
+      return client.get(`/zones/${zoneId}/ssl/certificate_packs`);
     },
   };
 
@@ -70,14 +63,7 @@ function buildTools(client: CloudflareClient): Record<string, Tool> {
         validation_method: 'txt',
       };
       const [result] = await client.post<any[]>(`/zones/${zoneId}/ssl/certificate_packs`, body);
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(result, null, 2)
-          }
-        ]
-      };
+      return result;
     },
   };
 
@@ -94,14 +80,7 @@ function buildTools(client: CloudflareClient): Record<string, Tool> {
         private_key,
       };
       if (bundle_method) body.bundle_method = bundle_method;
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(await client.post(`/zones/${zoneId}/custom_certificates`, body), null, 2)
-          }
-        ]
-      };
+      return client.post(`/zones/${zoneId}/custom_certificates`, body);
     },
   };
 

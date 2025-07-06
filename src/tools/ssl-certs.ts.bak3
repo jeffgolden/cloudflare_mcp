@@ -94,14 +94,7 @@ function buildTools(client: CloudflareClient): Record<string, Tool> {
         private_key,
       };
       if (bundle_method) body.bundle_method = bundle_method;
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(await client.post(`/zones/${zoneId}/custom_certificates`, body), null, 2)
-          }
-        ]
-      };
+      return client.post(`/zones/${zoneId}/custom_certificates`, body);
     },
   };
 

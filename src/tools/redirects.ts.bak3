@@ -112,14 +112,7 @@ export function getRedirectTools(client: CloudflareClient): { tools: Record<stri
       if (zones.length === 0) throw new Error(`Zone ${zone_name} not found`);
       const zoneId = zones[0].id;
       await client.delete(`/zones/${zoneId}/pagerules/${rule_id}`);
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify({ id: rule_id, deleted: true }, null, 2)
-          }
-        ]
-      };
+      return { id: rule_id, deleted: true };
     },
   };
 

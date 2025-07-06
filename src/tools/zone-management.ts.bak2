@@ -57,14 +57,7 @@ export function getZoneManagementTools(client: CloudflareClient): { tools: Recor
       const zones = await client.get<any[]>('/zones', { name: zone_name });
       if (zones.length === 0) throw new Error(`Zone ${zone_name} not found`);
       const zoneId = zones[0].id;
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(await client.get(`/zones/${zoneId}/settings`), null, 2)
-          }
-        ]
-      };
+      return client.get(`/zones/${zoneId}/settings`);
     },
   };
 
@@ -89,23 +82,9 @@ export function getZoneManagementTools(client: CloudflareClient): { tools: Recor
       const body = { items };
       const cfClient: any = client as any;
       if (typeof cfClient.patch === 'function') {
-        return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(await cfClient.patch(`/zones/${zoneId}/settings`, body), null, 2)
-          }
-        ]
-      };
+        return cfClient.patch(`/zones/${zoneId}/settings`, body);
       }
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(await cfClient.request("PATCH", `/zones/${zoneId}/settings`, body), null, 2)
-          }
-        ]
-      };
+      return cfClient.request('PATCH', `/zones/${zoneId}/settings`, body);
     },
   };
 
@@ -138,14 +117,7 @@ export function getZoneManagementTools(client: CloudflareClient): { tools: Recor
         }
         body = { [`${purge_type}`]: targets };
       }
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(await client.post(`/zones/${zoneId}/purge_cache`, body), null, 2)
-          }
-        ]
-      };
+      return client.post(`/zones/${zoneId}/purge_cache`, body);
     },
   };
 

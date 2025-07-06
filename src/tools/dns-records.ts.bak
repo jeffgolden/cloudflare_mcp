@@ -94,14 +94,7 @@ export function getDnsTools(client: CloudflareClient): { tools: Record<string, T
         return r;
       });
 
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(output, null, 2)
-          }
-        ]
-      };
+      return output;
     },
   };
 
@@ -242,14 +235,7 @@ export function getDnsTools(client: CloudflareClient): { tools: Record<string, T
       if (zones.length === 0) throw new Error(`Zone ${zone_name} not found`);
       const zoneId = zones[0].id;
       await client.delete(`/zones/${zoneId}/dns_records/${record_id}`);
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify({ success: true, id: record_id }, null, 2)
-          }
-        ]
-      };
+      return { success: true, id: record_id };
     },
   };
 

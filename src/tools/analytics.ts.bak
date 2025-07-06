@@ -28,14 +28,7 @@ export function getAnalyticsTools(client: CloudflareClient): { tools: Record<str
       const zoneId = zones[0].id;
       const query: Record<string, any> = { since: time_range };
       if (metrics) query.metrics = metrics.join(',');
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(await client.get(`/zones/${zoneId}/analytics/dashboard`, query), null, 2)
-          }
-        ]
-      };
+      return client.get(`/zones/${zoneId}/analytics/dashboard`, query);
     },
   };
 

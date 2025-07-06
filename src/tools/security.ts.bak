@@ -42,14 +42,7 @@ export function getSecurityTools(client: CloudflareClient): { tools: Record<stri
       if (rule_type) query.mode = rule_type;
 
       const wafRules = await client.get<Array<typeof WafRuleSchema['_type']>>(`/zones/${zoneId}/firewall/rules`, query);
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(wafRules, null, 2)
-          }
-        ]
-      };
+      return wafRules;
     },
   };
 
@@ -86,14 +79,7 @@ export function getSecurityTools(client: CloudflareClient): { tools: Record<stri
       ];
       // Cloudflare bulk create expects array
       const created = await client.post<Array<typeof WafRuleSchema['_type']>>(`/zones/${zoneId}/firewall/rules`, body);
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(created[0], null, 2)
-          }
-        ]
-      };
+      return created[0];
     },
   };
 
@@ -134,14 +120,7 @@ export function getSecurityTools(client: CloudflareClient): { tools: Record<stri
       if (paused !== undefined) body.paused = paused;
 
       const updated = await client.put<typeof WafRuleSchema["_type"]>(`/zones/${zoneId}/firewall/rules/${rule_id}`, body);
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(updated, null, 2)
-          }
-        ]
-      };
+      return updated;
     },
   };
 
@@ -169,14 +148,7 @@ export function getSecurityTools(client: CloudflareClient): { tools: Record<stri
       const zoneId = zones[0].id;
 
       const resp = await client.delete<{ id: string }>(`/zones/${zoneId}/firewall/rules/${rule_id}`);
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify({ id: resp.id ?? rule_id, deleted: true }, null, 2)
-          }
-        ]
-      };
+      return { id: resp.id ?? rule_id, deleted: true };
     },
   };
 

@@ -34,14 +34,7 @@ export function getRedirectTools(client: CloudflareClient): { tools: Record<stri
       const zoneId = zones[0].id;
       const query: any = {};
       if (status) query.status = status;
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(await client.get(`/zones/${zoneId}/pagerules`, query), null, 2)
-          }
-        ]
-      };
+      return client.get(`/zones/${zoneId}/pagerules`, query);
     },
   };
 
@@ -81,14 +74,7 @@ export function getRedirectTools(client: CloudflareClient): { tools: Record<stri
       };
 
       const created = await client.post(`/zones/${zoneId}/pagerules`, pageruleBody);
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(created, null, 2)
-          }
-        ]
-      };
+      return created; // Cloudflare returns the created Page Rule object
     },
   };
 
@@ -112,14 +98,7 @@ export function getRedirectTools(client: CloudflareClient): { tools: Record<stri
       if (zones.length === 0) throw new Error(`Zone ${zone_name} not found`);
       const zoneId = zones[0].id;
       await client.delete(`/zones/${zoneId}/pagerules/${rule_id}`);
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify({ id: rule_id, deleted: true }, null, 2)
-          }
-        ]
-      };
+      return { id: rule_id, deleted: true };
     },
   };
 

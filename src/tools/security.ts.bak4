@@ -169,14 +169,7 @@ export function getSecurityTools(client: CloudflareClient): { tools: Record<stri
       const zoneId = zones[0].id;
 
       const resp = await client.delete<{ id: string }>(`/zones/${zoneId}/firewall/rules/${rule_id}`);
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify({ id: resp.id ?? rule_id, deleted: true }, null, 2)
-          }
-        ]
-      };
+      return { id: resp.id ?? rule_id, deleted: true };
     },
   };
 
