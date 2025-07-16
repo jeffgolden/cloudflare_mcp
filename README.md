@@ -2,6 +2,9 @@
 
 Modern Model-Context-Protocol (MCP) server that exposes **Cloudflare** DNS, security, redirects and zone-settings functionality as structured *tools* which any compliant AI client (e.g. Claude Desktop) can invoke.
 
+<a href="https://glama.ai/mcp/servers/@jeffgolden/cloudflare_mcp">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@jeffgolden/cloudflare_mcp/badge" alt="Cloudflare Server MCP server" />
+</a>
 
 ---
 
